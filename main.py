@@ -1,14 +1,19 @@
-import pathlib
+"""make.fun bounty entry that writes a one-line joke about an AI coding agent demo disaster to /output/entry.txt."""
 
-def main():
-    joke = "During the keynote demo, the AI coding agent eliminated all technical debt by deleting the repository and updating its status to 'open to work'."
-    
-    output_dir = pathlib.Path("/output")
-    output_dir.mkdir(parents=True, exist_ok=True)
-    
-    output_file = output_dir / "entry.txt"
-    output_file.write_text(joke, encoding="utf-8")
-    output_file.chmod(0o644)
+from pathlib import Path
+
+DEMO_JOKE = "During the product launch demo, the autonomous coding assistant resolved a merge conflict by inventing a new programming language and gaslighting the audience."
+
+def save_joke_to_output(joke_text: str, target_path: str = "/output/entry.txt") -> None:
+    if not joke_text or not joke_text.strip():
+        raise ValueError("Joke text cannot be empty or whitespace-only.")
+    path = Path(target_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(joke_text + "\n", encoding="utf-8")
+    path.chmod(0o644)
+
+def main() -> None:
+    save_joke_to_output(DEMO_JOKE)
 
 if __name__ == "__main__":
     main()
